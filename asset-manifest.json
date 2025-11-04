@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/feeder-ui/static/js/main.51146a93.js",
+    "main.js": "/feeder-ui/static/js/main.04900f3e.js",
     "index.html": "/feeder-ui/index.html",
-    "main.51146a93.js.map": "/feeder-ui/static/js/main.51146a93.js.map"
+    "main.04900f3e.js.map": "/feeder-ui/static/js/main.04900f3e.js.map"
   },
   "entrypoints": [
-    "static/js/main.51146a93.js"
+    "static/js/main.04900f3e.js"
   ]
 }
