@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 function App() {
-  const [status, setStatus] = useState('Disconnected');
-  const [feederState, setFeederState] = useState('Закрыто');
+  const [wsStatus, setWsStatus] = useState('Disconnected'); // <-- статус WebSocket
+  const [feederState, setFeederState] = useState('Закрыто'); // <-- открыто/закрыто
   const ws = useRef(null);
 
   useEffect(() => {
@@ -12,15 +12,18 @@ function App() {
 
     socket.onopen = () => {
       setWsStatus('Connected');
-      console.log('WS open');
+      console.log('✅ WebSocket connected');
     };
+
     socket.onclose = () => {
       setWsStatus('Disconnected');
-      console.log('WS closed');
+      console.log('❌ WebSocket disconnected');
     };
+
     socket.onerror = (err) => console.error('WebSocket error:', err);
+
     socket.onmessage = (event) => {
-      console.log('Message from server:', event.data);
+      console.log('📨 Message from server:', event.data);
       if (event.data === 'open') setFeederState('Открыто');
       if (event.data === 'close') setFeederState('Закрыто');
     };
@@ -33,8 +36,6 @@ function App() {
     if (ws.current && ws.current.readyState === WebSocket.OPEN) {
       ws.current.send(cmd);
       console.log('➡️ Sent:', cmd);
-      // Сразу обновляем состояние локально, чтобы UI мгновенно реагировал
-      setFeederState(cmd === 'open' ? 'Открыто' : 'Закрыто');
     } else {
       console.warn('WebSocket not connected');
     }
@@ -43,10 +44,8 @@ function App() {
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
       <h1>🐱 Кормушка</h1>
-      <p>WebSocket status: {status}</p>
-      <p>
-        Состояние кормушки: <strong>{feederState}</strong>
-      </p>
+      <p>WebSocket status: {wsStatus}</p>
+      <p>Состояние кормушки: {feederState}</p>
 
       <button
         onClick={() => sendCommand('open')}
