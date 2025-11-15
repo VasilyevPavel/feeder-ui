@@ -6,23 +6,21 @@ function App() {
   const ws = useRef(null);
 
   useEffect(() => {
-    const socket = new WebSocket('wss://144.31.86.96:3000/');
+    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+    const host = window.location.host;
+    const socket = new WebSocket(`${protocol}://${host}/ws`);
 
     socket.onopen = () => {
-      setStatus('Connected');
-      console.log('✅ WebSocket connected');
+      setWsStatus('Connected');
+      console.log('WS open');
     };
-
     socket.onclose = () => {
-      setStatus('Disconnected');
-      console.log('❌ WebSocket disconnected');
+      setWsStatus('Disconnected');
+      console.log('WS closed');
     };
-
     socket.onerror = (err) => console.error('WebSocket error:', err);
-
     socket.onmessage = (event) => {
-      console.log('📨 Message from server:', event.data);
-
+      console.log('Message from server:', event.data);
       if (event.data === 'open') setFeederState('Открыто');
       if (event.data === 'close') setFeederState('Закрыто');
     };
