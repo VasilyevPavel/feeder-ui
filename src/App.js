@@ -8,7 +8,7 @@ function App() {
   useEffect(() => {
     const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
     const host = window.location.host;
-    const socket = new WebSocket(`${protocol}://${host}/ws`);
+    const socket = new WebSocket('ws://144.31.86.96:3000/ws');
 
     socket.onopen = () => {
       setWsStatus('Connected');
