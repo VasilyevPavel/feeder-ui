@@ -6,7 +6,7 @@ function App() {
   const ws = useRef(null);
 
   useEffect(() => {
-    const socket = new WebSocket('wss://http://144.31.86.96:3000/');
+    const socket = new WebSocket('wss://144.31.86.96:3000/');
 
     socket.onopen = () => {
       setStatus('Connected');
